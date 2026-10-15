@@ -5,13 +5,17 @@ function initThemeToggle() {
   const toggleBtn = document.getElementById("theme-toggle");
   const body = document.body;
 
+  let savedTheme = null;
   try {
-    if (sessionStorage.getItem(THEME_KEY) === "dark") {
-      body.classList.add("dark");
-    }
+    savedTheme = sessionStorage.getItem(THEME_KEY);
   } catch {
-    // sessionStorage unavailable; fall back to default theme
+    // sessionStorage unavailable; fall back to system preference
   }
+
+  const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+  const shouldUseDark = savedTheme ? savedTheme === "dark" : prefersDark;
+
+  body.classList.toggle("dark", Boolean(shouldUseDark));
 
   toggleBtn.addEventListener("click", () => {
     const isDark = body.classList.toggle("dark");
