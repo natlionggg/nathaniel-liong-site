@@ -1,4 +1,29 @@
 const GITHUB_USER = "natlionggg";
+const THEME_KEY = "theme";
+
+function initThemeToggle() {
+  const toggleBtn = document.getElementById("theme-toggle");
+  const body = document.body;
+
+  try {
+    if (sessionStorage.getItem(THEME_KEY) === "dark") {
+      body.classList.add("dark");
+    }
+  } catch {
+    // sessionStorage unavailable; fall back to default theme
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = body.classList.toggle("dark");
+    try {
+      sessionStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+    } catch {
+      // sessionStorage unavailable; toggle still works for this page view
+    }
+  });
+}
+
+initThemeToggle();
 
 async function loadRepos() {
   const statusEl = document.getElementById("repos-status");
