@@ -10,18 +10,6 @@
   --max-width: 960px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14161a;
-    --bg-alt: #1b1e24;
-    --text: #eceef1;
-    --text-muted: #a3abba;
-    --border: #2b2f37;
-    --accent: #6ea0ff;
-    --accent-text: #0d1117;
-  }
-}
-
 body.dark {
   --bg: #14161a;
   --bg-alt: #1b1e24;
