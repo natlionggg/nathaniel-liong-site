@@ -22,6 +22,16 @@
   }
 }
 
+body.dark {
+  --bg: #14161a;
+  --bg-alt: #1b1e24;
+  --text: #eceef1;
+  --text-muted: #a3abba;
+  --border: #2b2f37;
+  --accent: #6ea0ff;
+  --accent-text: #0d1117;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -99,6 +109,23 @@ a:focus-visible {
 .nav-links a {
   color: var(--text-muted);
   font-size: 0.95rem;
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  color: var(--text);
+  border-radius: 999px;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.05rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--accent);
 }
 
 .section {
