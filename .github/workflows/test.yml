@@ -1,0 +1,52 @@
+name: Functional Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  functional-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out site repo
+        uses: actions/checkout@v4
+
+      - name: Check out tests repo
+        uses: actions/checkout@v4
+        with:
+          repository: natlionggg/nathaniel-liong-site-tests
+          path: tests
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install test dependencies
+        working-directory: tests
+        run: npm install
+
+      - name: Install Playwright Chromium
+        working-directory: tests
+        run: npx playwright install --with-deps chromium
+
+      - name: Serve public/ on port 8000
+        run: python3 -m http.server 8000 --directory public &
+
+      - name: Wait for server to respond
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8000 > /dev/null; then
+              echo "Server is up"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Server did not respond in time" >&2
+          exit 1
+
+      - name: Run tests
+        working-directory: tests
+        env:
+          BASE_URL: http://localhost:8000
+        run: npm test
